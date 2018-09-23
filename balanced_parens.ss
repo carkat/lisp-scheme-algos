@@ -4,10 +4,11 @@
 (define (code char) (char->integer char))
 
 (define (types-match? parens first open stack)
-  "This function matches type of braces by charcode.
-   When (code first) - 1 = (code (car stack)), first = ()
-   When (code first) - 2 = (code (car stack)), first = {} or []
-   When correct-match is found, continue recursion."
+  """ This function matches type of braces by charcode.
+  When (code first) - 1 = (code (car stack)), first = ()
+  When (code first) - 2 = (code (car stack)), first = {} or []
+  When correct-match is found, continue recursion.
+  """
   (let ((correct-match
 	 (and (not (null? stack))
 	   (or (= (- (code first) 1)
