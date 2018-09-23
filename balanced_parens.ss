@@ -1,32 +1,23 @@
-(define nil '())
-(define symbol-list "({[")
+(define open (string->list "({["))
 
-(define (code char) (char->integer char))
+;;; the main attraction
+(define (balanced? parens)
+  (balanced-loop (string->list parens) open '()))
 
-(define (types-match? parens first open stack)
-  """ This function matches type of braces by charcode.
-  When (code first) - 1 = (code (car stack)), first = ()
-  When (code first) - 2 = (code (car stack)), first = {} or []
-  When correct-match is found, continue recursion.
-  """
-  (let ((correct-match
-	 (and (not (null? stack))
-	   (or (= (- (code first) 1)
-		  (code (car stack)))
-	       (= (- (code first) 2)
-		  (code (car stack)))))))
-    (if correct-match 
-	(balanced-loop (cdr parens) open (cdr stack))
-	#f)))
+(define (code char n) (- (char->integer char) n))
+
+;;; matching braces are either 1 or 2 off in ascii
+(define (match? s1 s2) 
+  (or (= (code s1 1) (code s2 0))
+      (= (code s1 2) (code s2 0))))
 
 (define (balance-check parens open stack)
-  """ If first is an opening character continue looping.
-  Otherwise, it is a closing character, so check the type.
-  """
   (let ((first (car parens)))
-    (if (memq first open)
-	(balanced-loop (cdr parens) open (cons first stack))
-	(types-match? parens first open stack))))
+    (cond ((memq first open)
+	   (balanced-loop (cdr parens) open (cons first stack)))
+	  ((and (not (null? stack)) (match? first (car stack)))
+	   (balanced-loop (cdr parens) open (cdr stack)))
+	  (#t #f))))
 
 (define (balanced-loop parens open stack)
   (cond ((not (null? parens))
@@ -35,18 +26,12 @@
 	((and (null? parens) (not (null? stack))) #f)
 	(#t (list parens stack))))
   
-;;; the main attraction
-(define (balanced? parens)
-  (balanced-loop
-   (string->list parens)
-   (string->list symbol-list)
-   '()))
 
 
 ;;; Testing below only
 (define (test-balanced name val expect)
   (display name)
-  (display (eq? expect (balanced? val)))
+  (display (if (eq? expect (balanced? val)) "PASS" "FAIL"))
   (display #\newline))
 
 
