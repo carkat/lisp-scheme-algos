@@ -37,11 +37,10 @@
   
 ;;; the main attraction
 (define (balanced? parens)
-  (let ((open #t))
-    (balanced-loop
-	(string->list parens)
-	(string->list symbol-list)
-	'())))
+  (balanced-loop
+   (string->list parens)
+   (string->list symbol-list)
+   '()))
 
 
 ;;; Testing below only
