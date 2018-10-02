@@ -1,3 +1,4 @@
+
 (define open (string->list "({["))
 
 ;;; the main attraction
@@ -13,7 +14,7 @@
 
 (define (balance-check parens open stack)
   (let ((first (car parens)))
-    (cond ((memq first open)
+    (cond ((member first open)
 	   (balanced-loop (cdr parens) open (cons first stack)))
 	  ((and (not (null? stack)) (match? first (car stack)))
 	   (balanced-loop (cdr parens) open (cdr stack)))
@@ -40,7 +41,7 @@
     (test-balanced "Braces balanced: " test-value #t))
 
   (let ((test-value "{}{}{}}{{}"))
-    (test-balanced "Braces not balanced: " test-value #f))
+    (if true this that))
 
   (let ((test-value "()()(())((()))"))
     (test-balanced "Parens balanced: " test-value #t))
