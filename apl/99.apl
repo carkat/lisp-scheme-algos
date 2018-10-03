@@ -11,17 +11,17 @@ butlast←{1↑(-2)↑⍵}
 ⍝ Problem 3: get nth element
 ⍝ 3 elementat 5 6 8 2 3 4
 ⍝ return 8
-elementat←{(⍺=⍳⍴⍵)/⍵}
+elementat←{⍺⊃⍵}
 
 ⍝ Problem 4: find the length of a list
 ⍝ len 1 2 3 5 6
 ⍝ return 5
-len←⍴
+len←{⍴⍵}
 
 ⍝ Problem 5: reverse a list
 ⍝ reverse 1 2 3 4
 ⍝ return 4 3 2 1
-reverse←⌽
+reverse←{⌽⍵}
 
 ⍝ Problem 6: is palindrome?
 ⍝ palindrom a b c d c b a
@@ -31,7 +31,7 @@ palindrome←{∧/⍵=⌽⍵}
 ⍝ Problem 7: flatten nested list
 ⍝ flatten (1 (2 (3 (4 5 6)) (7 8) 9))
 ⍝ return 1 2 3 4 5 6 7 8 9
-flatten←∊
+flatten←{∊⍵}
 
 ⍝ Problem 8: remove consecutive duplicates 
 ⍝ compress 'aaaabbccccccccddddddddddeffffg'
@@ -48,7 +48,6 @@ group←{replicate¨encode ⍵}
 ⍝ Problem 10: run length encoding
 ⍝ compress 'aaaabbcdddeffg'
 ⍝ return 4a 2b 1c 3d 1e 2f 1g
-
 ⍝ count reads as follows
 ⍝ get the absolute value of subtracting subsequent pairs 
 ⍝ of the boolean filtered list of indices of length of the
@@ -104,7 +103,7 @@ splice←{l r←⍺ ⋄ ((r>i)∧l≤i←⍳⍴⍵)/⍵}
 ⍝ Problem 19: rotate n places
 ⍝ 2 rotate 'abcdefgh'
 ⍝ return 'cdefghab'
-rotate←⌽
+rotate←{⍺⌽⍵}
 
 ⍝ Problem 20: remove the nth item in a list
 removenth←{(~⍺=⍳⍴⍵)/⍵}
@@ -125,7 +124,7 @@ between←{(⍺-1)+⍳(1+⍵-⍺)}
 selectrnd←{⍵[⍺?⍴⍵]}
 
 ⍝ Problem 24: n unique rand below m
-lotto←?
+lotto←{⍺?⍵}
 
 ⍝ Problem 25: jumble a list
 jumble←{⍵[(⍴⍵)?⍴⍵]}
