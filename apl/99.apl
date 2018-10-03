@@ -71,7 +71,6 @@ decode←{1=⍴⍵:⍵⋄replicate ⍵}
 ⍝ as encodemod builds the correct input for decode
 decode ¨ encodemod 'aaaabbcdddeffg'
 
-
 ⍝ Problem 13: decode modified run length encoded array
 ⍝ already solved by problem 10?
 
@@ -93,8 +92,9 @@ split←{(⍺↑⍵) ((⍺-⍴⍵)↑⍵)}
 ⍝ (3 7) splice 'abcdefgh'
 ⍝ return 'cdef'
 splice←{((⍺[2]>l)∧⍺[1]≤l←⍳⍴⍵)/⍵}
-splice←{l r←⍺ ⋄ ((r>i)∧l≤i←⍳⍴⍵)/⍵}
 
+⍝ other veresions from chat
+splice←{l r←⍺ ⋄ ((r>i)∧l≤i←⍳⍴⍵)/⍵}
 ∇ret←tuple splice string
   left right←tuple
   indices←⍳⍴string
@@ -113,7 +113,6 @@ removenth←{(~⍺=⍳⍴⍵)/⍵}
 ⍝ 3 'val' insert 'abcdef'
 ⍝ 'abcvaldef'
 insert←{n v←⍺⋄l r←n split ⍵⋄ ∊l v r}
-
 
 ⍝ Problem 22: range between
 between←{(⍺-1)+⍳(1+⍵-⍺)}
@@ -136,25 +135,38 @@ jumble←{⍵[(⍴⍵)?⍴⍵]}
 ⍝ Problem 28: sort lists by length of lists
 lsort←{⍵[⍋∊(⍴¨⍵)]}
 
-
-⍝ sort integers ascending 
+⍝ sort integers ascending recursive
 sortup←{∨/2>/⍵:∇(b/⍵),(~b←0,2>/⍵)/⍵⋄⍵}
-⍝ get list of n in range  
+
+⍝ sort integers ascending simple
+sortup2←{⍵[⍋⍵]}
+
+⍝ get list of n in range from left to right argument
 between←{(⍺-1)+⍳(1+⍵-⍺)}
+
 ⍝ get even numbers in range 
 evenbetween←{(0=2|ns)/ns←⍺ between ⍵}
+
 ⍝ get list of factors of n 
 factors←{(0=range|⍵)/range←⍳⍵}
-⍝ pair an even n with its prime summation 
+
+⍝ pair an even n with its prime goldbach pair
 gbpairs←{ns,¨goldbach¨ns←⍺ evenbetween ⍵}
+
 ⍝ get the first prime pair adding to an even n
 goldbach←{2↑∊(⍵=+/¨pairs)/¨pairs←ps∘.,ps←primes ⍵}
-⍝ find if a number is prime 
+
+⍝ find if number is prime
 isprime←{2=+/0=(⍳⍵)|⍵}
+
 ⍝ prime factors of n 
 primefacts←{(isprime¨f)/f←factors ⍵}
-⍝ primes below right arg
+
+⍝ primes below n
 primes←{(isprime¨range)/range←⍳⍵}
 
 ⍝ snailsort
+⍝ snailsort 3 3 ⍴ ⍳9
+⍝ returns 1 2 3 6 9 8 7 4 5
+⍝ sort a n x n matrix in the shape of a snail shell
 snailsort←{0<+/⍴⍵:⍵[1;],∇⊖⍉⍵[1↓⍳1↑⍴⍵;]⋄⍬}
